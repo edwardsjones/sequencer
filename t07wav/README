@@ -1,0 +1,8 @@
+Sound samples are from: http://www.wavsource.com/
+
+Converted with 
+
+ sox input.wav -c 1 -r 8000 -e unsigned-integer -b 8 output.wav
+ 
+See: https://github.com/fatcookies/lafortuna-wav-lib
+

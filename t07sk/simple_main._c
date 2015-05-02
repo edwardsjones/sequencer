@@ -1,0 +1,47 @@
+/*       -*- mode: c;  -*-        */
+
+#include <avr/io.h>
+#include <util/delay.h>
+
+
+#define LED_ON      PORTB |=  _BV(PINB7)
+#define LED_OFF     PORTB &= ~_BV(PINB7) 
+#define LED_TOGGLE  PINB  |=  _BV(PINB7)
+
+void main(void) {
+	uint8_t i;
+	
+	/* 8MHz clock, no prescaling (DS, p. 48) */
+    CLKPR = (1 << CLKPCE);
+    CLKPR = 0;
+
+    DDRB  |=  _BV(PINB7);  	 /* LED as output */
+
+	DDRB &= ~_BV(PB6);   /* SD Card detection */
+	PORTB |= _BV(PB6);
+
+	for(i=0; i < 50; i++){	
+		LED_TOGGLE;
+		_delay_ms(50);
+	}
+	
+	
+    
+    for(;;){
+	    _delay_ms(200);
+	    if (PINB & _BV(PB6)) {
+		    LED_ON;
+		} else {
+		    LED_OFF;		    
+	    }
+    }
+    
+    
+}
+
+
+/* int blink(int state) { */
+/* 	LED_TOGGLE; */
+/* 	return state; */
+/* } */
+
